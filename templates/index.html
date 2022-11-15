@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        function openCity(cityName) {
+          var i;
+          var x = document.getElementsByClassName("city");
+          for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";  
+          }
+          document.getElementById(cityName).style.display = "block";  
+        }
+        </script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Crypto currency rates viewer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <style>
+    body{
+    background-color:#eee;
+}
+
+*{
+    padding:0;
+    margin:0;
+}
+.main-div{
+    height:2vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.button-div{
+    padding:60px;
+    position:absolute;
+}
+
+.fav-button{
+    border:none;
+    height:30px;
+    width:35px;
+    font-size:15px;
+    background-color:#000;
+    color:#fff;
+    border-radius:5px;
+    cursor:pointer;
+    display:flex;
+    justify-content:right;
+    align-items:center;
+    
+}
+
+.fav-button i{
+    position:absolute;
+    left:70px;
+
+}
+
+.fav-button:active i {
+    
+    animation: item 1s ease-in forwards;
+}
+
+
+@keyframes item {
+    0% {
+        
+        top: 20%;
+        color:#000;
+        
+    }
+
+    25% {
+        top: 10%;
+        color:#000;
+        
+    }
+
+    50% {
+        
+        top: 10%;
+        
+     
+    }
+
+    75% {
+        
+        top: 10%;
+    
+    
+    }
+
+    0% {
+        top:0%;
+    }
+}
+    a.button.green {
+        margin: 10px;
+    
+    }
+    </style>
+</head>
+<body>
+    <div style="align-self: center ;" class="w3-bar w3-black">
+        <button class="w3-bar-item w3-button" onclick="openCity('Crypto')">CryptoCurrencies</button>
+        <button class="w3-bar-item w3-button" onclick="openCity('Stocks')">NYSE:Stocks</button>
+        <button class="w3-bar-item w3-button" onclick="openCity('Favorites')">Favorites</button>
+      </div><br>
+    <div id="Crypto" class="ui grid container city">
+        {% for item in crypto_data['data'] %}
+        <div class="three wide column">
+            <div style="height:400px; width:300px;" href="/information/{{item.symbol}}" class="ui centered card">
+                <div class="image">
+                        <img  src="https://s2.coinmarketcap.com/static/img/coins/128x128/{{item.id}}.png" alt="{{item.name}} logo">
+                </div>
+                <center><div class="content"><br>
+                    <div class="header">{{item.name}}</div>
+                    <div class="meta">
+                        <a>{{item.symbol}}</a>
+                    </div>
+                    <div class="description">
+                        {{item.quote.BTC.price/(1*(10**-8))}} satoshis
+                    </div>
+                </div></center>
+                <div class="extra-information">
+                    <center><a href="/information/{{item.symbol}}" class="ui button green">See more details</a></center>
+                    <div class="main-div">
+                        <div class="button-div">
+                        <button class="fav-button">
+                            <i class="fa fa-star"></i>
+                        </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div id="Stocks" class="ui grid container city">
+        {% for item in results %}
+            
+        <div class="three wide column">
+            <div style="height:400px; width:300px;" href="/information/{{item['symbol']}}" class="ui centered card">
+                <div class="image">
+                        <img  src="{{ item['logo_url'] }}" alt="{{ item['name'] }}logo">
+                </div>
+                <center><div class="content"><br>
+                    <div class="header">{{ item['name'] }}</div>
+                    <div class="meta">
+                        <a>{{ item['symbol'] }}</a>
+                    </div>
+                    <div class="description">
+                        {{ item['open_price'] }}
+                    </div>
+                </div></center>
+                <div class="extra-information">
+                    <center><a href="/information/{item['symbol']}}" class="ui button green">See more details</a></center>
+                    <div class="main-div">
+                        <div class="button-div">
+                        <button class="fav-button">
+                            <i class="fa fa-star"></i>
+                        </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+</body>
+</html>
