@@ -9,7 +9,7 @@ app.config['TEMPLATES_AUTO_RELOAD'] = True # This will make sure we don't need t
 
 crypto_data = None # We will reuse this object everytime we render the homepage.
 # You can also decide not to reuse it, but we'll have to think about API request limitation 
-# and on top of that, having it cached will make it render faster
+
 
 @app.route("/") # Tell the server to use this function when '/' is the url
 def main():
